@@ -1,4 +1,4 @@
-import requests
+import aiohttp
 import random
 import time
 from bs4 import BeautifulSoup
@@ -15,32 +15,37 @@ user_agents = [
 ]
 
 
-def get_ip_info():
+async def get_ip_info():
   try:
-    response = requests.get('https://ipinfo.io/json', headers={'User-Agent': random.choice(user_agents)})
-    response.raise_for_status()
+    async with aiohttp.ClientSession() as session:
+      async with session.get('https://ipinfo.io/json', headers={'User-Agent': random.choice(user_agents)}) as response:
+        response.raise_for_status()
 
-    return response.json()
+        return await response.json()
+      
   except Exception as err:
     return str(err)
 
 
-def scan_ip_on_threats(ip):
+async def scan_ip_on_threats(ip):
   try:
-    response = requests.get(f'https://db-ip.com/{ip}', headers={'User-Agent': random.choice(user_agents)})
-    response.raise_for_status()
+    async with aiohttp.ClientSession() as session:
+      async with session.get(f'https://db-ip.com/{ip}', headers={'User-Agent': random.choice(user_agents)}) as response:
+        response.raise_for_status()
 
-    soup = BeautifulSoup(response.text, 'lxml')
+        html = await response.text()
+        soup = BeautifulSoup(html, 'lxml')
 
-    data = soup.find('div', {'class': 'row justify-content-between'}).find('div', {'class': 'col-lg-6 col-md-6'})
-    security_lvl = data.find('span', {'class': 'label badge-success'}).get_text(strip=True)
+        data = soup.find('div', {'class': 'row justify-content-between'}).find('div', {'class': 'col-lg-6 col-md-6'})
+        security_lvl = data.find('span', {'class': 'label badge-success'}).get_text(strip=True)
 
-    return {'success': True, 'ip': ip, 'lvl': security_lvl}
+        return {'success': True, 'security_lvl': security_lvl}
+      
   except Exception as err:
     return {'success': False, 'error': str(err)}
 
 
-def check_cloudflare_availability():
+async def check_cloudflare_availability():
   urls = [
     'https://www.cloudflare.com',
     'https://1.1.1.1',
@@ -55,18 +60,22 @@ def check_cloudflare_availability():
     index += 1
 
     try:
-      start_time = time.time()
-      response = requests.get(url, headers={'User-Agent': random.choice(user_agents)}, timeout=10)
-      end_time = time.time()
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as session:
+        start_time = time.time()
+        async with session.get(url, headers={'User-Agent': random.choice(user_agents)}, timeout=10) as response:
+          end_time = time.time()
+
+          await response.text()
             
-      results[index] = {
-        'url': url,
-        'success': True if response.status_code == 200 else False,
-        'status_code': response.status_code,
-        'response_time': str(round((end_time - start_time) * 1000, 2)).split('.')[0],
-      }
+          results[index] = {
+            'url': url,
+            'success': True if response.status == 200 else False,
+            'status_code': response.status,
+            'response_time': str(round((end_time - start_time) * 1000, 2)).split('.')[0],
+          }
             
-    except requests.exceptions.RequestException as err:
+    except Exception as err:
       results[index] = {
         'url': url,
         'success': False,
@@ -76,7 +85,7 @@ def check_cloudflare_availability():
   return results
 
 
-def check_youtube_availability():
+async def check_youtube_availability():
   urls = [
     'https://www.youtube.com/',
     'https://music.youtube.com/'
@@ -89,18 +98,22 @@ def check_youtube_availability():
     index += 1
 
     try:
-      start_time = time.time()
-      response = requests.get(url, headers={'User-Agent': random.choice(user_agents)}, timeout=10)
-      end_time = time.time()
+      timeout = aiohttp.ClientTimeout(total=10)
+      async with aiohttp.ClientSession(timeout=timeout) as session:
+        start_time = time.time()
+        async with session.get(url, headers={'User-Agent': random.choice(user_agents)}) as response:
+          end_time = time.time()
+
+          await response.text()
             
-      results[index] = {
-        'url': url,
-        'success': True if response.status_code == 200 else False,
-        'status_code': response.status_code,
-        'response_time': str(round((end_time - start_time) * 1000, 2)).split('.')[0],
-      }
+          results[index] = {
+            'url': url,
+            'success': True if response.status == 200 else False,
+            'status_code': response.status,
+            'response_time': str(round((end_time - start_time) * 1000, 2)).split('.')[0],
+          }
             
-    except requests.exceptions.RequestException as err:
+    except Exception as err:
       results[index] = {
         'url': url,
         'success': False,

@@ -4,10 +4,11 @@ import subprocess
 import webbrowser
 import platform
 import time
+from pystyle import Colors
 from pathlib import Path
 
 def logging(log_prefix, text):
-  print(f'[ INFO{f' ~ {log_prefix}' if log_prefix else ''} ]: {text}')
+  print(f'{Colors.green}[ INFO{f' ~ {log_prefix}' if log_prefix else ''} ]{Colors.reset}: {text}')
 
 def run_command(command):
   logging('EXECUTE', f'Выполняется "{command}"...')
@@ -21,6 +22,8 @@ def run_command(command):
 
 def check_requirements():
   try:
+    logging('CHECK', 'Проверка Python и pip...')
+
     subprocess.run([sys.executable, '--version'], check=True, capture_output=True)
     subprocess.run([sys.executable, '-m', 'pip', '--version'], check=True, capture_output=True)
     return True
@@ -37,6 +40,8 @@ def main():
   current_dir = Path(__file__).parent
   site_dir = current_dir / 'site' / 'index.html'
   requirements_file = current_dir / 'requirements.txt'
+
+  logging('CHECK', 'Проверка requirements.txt...')
     
   if not requirements_file.exists():
     logging('ERROR', 'Файл requirements.txt не найден.')

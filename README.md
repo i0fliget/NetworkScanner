@@ -15,16 +15,18 @@ Fast, easy to use, automatic.
 ## Quick Start
 
 ### Automatic installation (recommended):
-> bash
 ```
+> bash
+
 git clone https://github.com/i0fliget/NetworkScanner.git
 cd NetworkScanner/src
 python run.py
 ```
 
 ### Self-installation:
-> bash
 ```
+> bash
+
 git clone https://github.com/i0fliget/NetworkScanner.git
 cd NetworkScanner/src
 pip install -r requirements.txt
