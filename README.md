@@ -2,7 +2,7 @@
 
 A simple network scanner with a beautiful dark web interface.
 
-Fast, easy to use, automatic.
+Fast, easy to use, automatic, asynchronous.
 
 ## Features
 
@@ -14,22 +14,27 @@ Fast, easy to use, automatic.
 
 ## Quick Start
 
-### Automatic installation (recommended):
+### Installing dependencies (Windows/Linux)
 ```
-> bash
+> WINDOWS
+*Download the repository from github, then unpack it*
+
+cd NetworkScanner/main/
+setup.bat
+```
+
+```
+> LINUX
 
 git clone https://github.com/i0fliget/NetworkScanner.git
-cd NetworkScanner/src
+cd NetworkScanner/main/
+bash setup.sh
+```
+
+If the final withdrawal was successful, go to the points below.
+
+### Automatic start:
+```
+cd NetworkScanner/main/src/
 python run.py
 ```
-
-### Self-installation:
-```
-> bash
-
-git clone https://github.com/i0fliget/NetworkScanner.git
-cd NetworkScanner/src
-pip install -r requirements.txt
-uvicorn api:app --reload
-```
-#### Next, copy the **full** path to src/site/index.html and paste it into your browser.
