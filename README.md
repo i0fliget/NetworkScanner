@@ -27,6 +27,14 @@ Requires Golang 1.24.7+ to be installed from the official https://go.dev/dl/ web
 ![](main/images/image1.png)
 ## Quick Start
 
+## Installing dependencies
+
+Go to the NetworkScanner/main directory, then type:
+
+```
+go mod download
+```
+
 ### Launch (Windows/Linux)
 
 Windows:
@@ -36,6 +44,14 @@ Windows:
 Linux (ONLY DEBIAN-BASED):
 - Go to NetworkScanner/main/
 - Run the file run
+
+## Important for Windows users
+
+This program does not have the **author's signature** and **Microsoft certificates**, so **Microsoft Defender** may block the program, or restrict its permission to use the network, which will cause critical errors in the scanner's operation.
+
+If you have such antiviruses as **Avast**, **Kaspersky**, then they can **remove the program without warning**.
+
+Please, be careful.
 
 ## For developers
 
