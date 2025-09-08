@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Network Scanner</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="scan-container">
+    <h1>Сканер сети</h1>
+    
+    <button onclick="startNetworkScanning()">Сканирование сети</button>
+    <button onclick="startSpeedTest()">Тест скорости сети</button>
+    <button onclick="startBlacklistsVerification()">Проверка чёрных списков</button>
+    <button onclick="startAbuseScanning()">Abuse-сканирование</button>
+
+    <div id="results-container" class="results-container">
+      <p>Просканируйте сеть и получите результаты.</p>
+    </div>
+  </div>
+</body>
+</html>
