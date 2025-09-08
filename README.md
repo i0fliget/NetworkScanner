@@ -8,10 +8,6 @@ Fast, easy to use, automatic, asynchronous.
 
 The Network Scanner project was created for simple and fast network scanning. The basis of the project is written in Go (Golang). The project is open source, it can be viewed in NetworkScanner/main/src/.
 
-## Warning
-
-Requires Golang 1.24.7+ to be installed from the official https://go.dev/dl/ website
-
 ### Features
 
 * IP Information - Detailed geolocation and network information
@@ -25,6 +21,11 @@ Requires Golang 1.24.7+ to be installed from the official https://go.dev/dl/ web
 
 ### Screenshots
 ![](main/images/image1.png)
+
+## Warning
+
+Requires Golang 1.24.7+ to be installed from the official https://go.dev/dl/ website
+
 ## Quick Start
 
 ## Installing dependencies
