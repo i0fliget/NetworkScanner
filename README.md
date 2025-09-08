@@ -36,7 +36,7 @@ Go to the NetworkScanner/main directory, then type:
 go mod download
 ```
 
-### Launch (Windows/Linux)
+## Launch (Windows/Linux)
 
 Windows:
 - Go to NetworkScanner/main/
